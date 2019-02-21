@@ -32,22 +32,22 @@
         <filter-name>sessionExpireFilter</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>-->
-    <filter>
+<!--    <filter>
         <filter-name>springSessionRepositoryFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>springSessionRepositoryFilter</filter-name>
         <url-pattern>*.do</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
-    <listener>
+<!--    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+    </listener> -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -62,10 +62,10 @@
     </servlet>
 
 
-    <!--<servlet-mapping>
+    <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
