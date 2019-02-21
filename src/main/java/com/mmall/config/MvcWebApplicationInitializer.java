@@ -1,13 +1,25 @@
 package com.mmall.config;
 
 import org.springframework.lang.Nullable;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class MvcWebApplicationInitializer
-        ///extends AbstractAnnotationConfigDispatcherServletInitializer
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
+
+public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer implements WebApplicationInitializer
 {
 
-/*    @Nullable
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet());
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("*.do", "/");
+    }
+
+    @Nullable
     @Override
     protected Class<?>[] getRootConfigClasses() {
 
@@ -25,5 +37,5 @@ public class MvcWebApplicationInitializer
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};//springMVC匹配的路径
-    }*/
+    }
 }

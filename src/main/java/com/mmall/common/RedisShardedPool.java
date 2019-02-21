@@ -48,7 +48,7 @@ public class RedisShardedPool {
         JedisShardInfo info1 = new JedisShardInfo(redis1Ip, redis1Port, 1000 * 2);
         JedisShardInfo info2 = new JedisShardInfo(redis2Ip, redis2Port, 1000 * 2);
 
-        List<JedisShardInfo> jedisShardInfoList = new ArrayList<JedisShardInfo>(2);
+        List<JedisShardInfo> jedisShardInfoList = new ArrayList<JedisShardInfo>();
         jedisShardInfoList.add(info1);
         jedisShardInfoList.add(info2);
 

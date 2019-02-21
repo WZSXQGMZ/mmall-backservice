@@ -29,11 +29,11 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 
-//@Configuration
-@MapperScan(basePackages = "com.mmall.mapper", value="sqlSessionFactory")
-@ImportResource(locations = {"classpath:/applicationContext-datasource.xml"})
+@Configuration
+//@MapperScan(basePackages = "com.mmall.dao", value="sqlSessionFactory")
+//@ImportResource(locations = {"classpath:/generatorConfig.xml"})
 public class DataSourceConfig {
-/*    @Bean(name = "propertyConfigurer")
+    @Bean(name = "propertyConfigurer")
     public PropertyPlaceholderConfigurer getPropertyConfigurer(){
         PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
         configurer.setOrder(2);
@@ -87,6 +87,6 @@ public class DataSourceConfig {
         bean.setPlugins(interceptors);
 
         return bean;
-    }*/
+    }
 
 }

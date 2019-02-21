@@ -7,6 +7,5 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @MapperScan("com.mmall.dao")
-@ImportResource(locations = {"classpath:/generatorConfig.xml"})
 public class DaoConfig {
 }

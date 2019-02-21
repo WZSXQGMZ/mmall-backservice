@@ -6,7 +6,7 @@
 
     <display-name>Archetype Created Web Application</display-name>
 
-    <filter>
+<!--    <filter>
         <filter-name>characterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
@@ -21,7 +21,7 @@
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <!-- 二期新增重置session时间的filter -->
     <!--<filter>
@@ -41,28 +41,28 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>-->
 
-    <listener>
+<!--    <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
+    </listener>-->
 
 <!--    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener> -->
-    <context-param>
+<!--    <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:applicationContext.xml
+            classpath:src/main/temp/applicationContext.xml
         </param-value>
-    </context-param>
+    </context-param>-->
 
-    <servlet>
+<!--    <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>
+    </servlet>-->
 
 
-    <servlet-mapping>
+<!--    <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
@@ -70,7 +70,7 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
 </web-app>
 
