@@ -7,6 +7,9 @@
 #kdiff3 ignore
 *.orig
 
+#git
+gitdownload/
+
 #maven ignore
 target/
 
@@ -23,6 +26,7 @@ target/
 *.iws
 
 #temp file
+*.log.*
 *.log
 *.cache
 *.diff
