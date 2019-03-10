@@ -1,11 +1,11 @@
 server:
-  port: 8881
+  port: 8080
 
 
 spring:
   cloud:
     config:
-      label: master
+      label: v1.0
       profile: application
       #uri: http://localhost:8888/
       discovery:
