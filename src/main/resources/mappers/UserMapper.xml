@@ -11,6 +11,7 @@
             <arg column="question" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="answer" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="valid" javaType="java.lang.Integer" jdbcType="INTEGER" />
             <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
@@ -64,6 +65,14 @@
         where email = #{email}
         and id != #{userId}
     </select>
+
+    <select id="selectCountByNameAndMail" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1)
+        from mmall_user
+        where username = #{username}
+        and email = #{email}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mmall_user
     where id = #{id,jdbcType=INTEGER}
@@ -194,5 +203,11 @@
         update mmall_user
         set password = #{passwordNew}, update_time = now()
         where username = #{username}
+    </update>
+
+    <update id="updateValid" parameterType="java.util.Map">
+        UPDATE mmall_user
+        SET valid = #{valid}
+        WHERE username = #{username}
     </update>
 </mapper>

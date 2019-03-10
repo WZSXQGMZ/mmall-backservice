@@ -5,14 +5,18 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
+//开启自动配置
 @EnableAutoConfiguration
-@Controller
+//开启热刷新配置
+@RefreshScope
 @EnableEurekaClient
+@Controller
 public class MmallBackserviceApplication extends SpringBootServletInitializer {
 
 	@Override

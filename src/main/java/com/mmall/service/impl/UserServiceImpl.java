@@ -5,9 +5,9 @@ import com.mmall.common.ServerResponse;
 import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
-import com.mmall.util.MD5Util;
-import com.mmall.util.RedisShardedPoolUtil;
+import com.mmall.util.*;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,8 +60,88 @@ public class UserServiceImpl implements IUserService {
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("注册失败");
         }
+        if(sendConfirmMail(user.getEmail(), user.getUsername()) == false){
+            return ServerResponse.createByErrorMessage("邮件发送失败");
+        }
+        return ServerResponse.createBySuccessMessage("注册成功, 请前往邮箱点击验证链接");
+    }
 
-        return ServerResponse.createBySuccessMessage("注册成功");
+    /**
+     * 函数用于发送验证邮件
+     * @param mailAddress 待验证邮箱
+     * @param userName 用户名
+     * @return 邮件发送是否成功
+     */
+    private boolean sendConfirmMail(String mailAddress, String userName) {
+        String plaintext = userName + "," + mailAddress + "," + DateTimeUtil.getDate();
+        String ciphertext = null;
+        try {
+            //加密用户名和邮箱
+            ciphertext = SymCrypUtil.encrypt(plaintext, SymCrypUtil.getKey());
+        }catch(Exception exception) {
+            exception.printStackTrace();
+            return false;
+        }
+        String url = "http://localhost/user/checkMail?link=" + ciphertext;
+        //拼接内容
+        String mailContent="<p><span>欢迎使用mmall，请在30分钟内访问下面的链接以完成邮箱验证</span></p>"
+                +"<p><a href=\"" + url + "\">" + url + "</a></p>";
+        //发送邮件
+        if(MailUtil.sendMail("邮箱验证", mailContent, mailAddress)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+     * 函数用于验证邮箱验证链接
+     * @param link 携带数据参数的request
+     */
+    @Override
+    public ServerResponse<String> checkVerifyLink(String link) {
+        if(link == null) {
+            return ServerResponse.createByErrorMessage("验证错误");
+        }
+        String plaintext = null;
+        //解密数据
+        try {
+            plaintext = SymCrypUtil.decrypt(link, SymCrypUtil.getKey());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ServerResponse.createByErrorMessage("验证错误");
+        }
+        try {
+            String[] result = plaintext.split(",");
+            String username;
+            String email;
+            String registerTime;
+            //如果链接格式不正确
+            if(result.length != 3) {
+                return ServerResponse.createByErrorMessage("验证错误");
+            }
+            username = result[0];
+            email = result[1];
+            registerTime = result[2];
+            //判断是否过期
+            int time = DateTimeUtil.minutesBetweenDate(registerTime, DateTimeUtil.getDate());
+            if(time > 30) {
+                return ServerResponse.createByErrorMessage("连接已过期");
+            }
+            //判断数据是否正确
+            int userCount = userMapper.selectCountByNameAndMail(username, email);
+            if(userCount != 1) {
+                return ServerResponse.createByErrorMessage("用户信息有误");
+            }
+            //更新用户权限，暂不判断
+            if(userMapper.updateValid(username, Const.UserAccountStatuEnum.VERIFIED.getCode()) == 0){
+                return ServerResponse.createByErrorMessage("验证错误");
+            }
+        }catch(Exception exception) {
+            exception.printStackTrace();
+            return ServerResponse.createByErrorMessage("验证错误");
+        }
+        return ServerResponse.createBySuccessMessage("验证成功");
     }
 
     @Override

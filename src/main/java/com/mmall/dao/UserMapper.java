@@ -32,4 +32,8 @@ public interface UserMapper {
     int checkPassword(@Param("password") String password, @Param("userId") Integer userId);
 
     int checkEmailByUserId(@Param("email") String email, @Param("userId") Integer userId);
+
+    int updateValid(@Param("username") String username, @Param("valid") Integer valid);
+
+    int selectCountByNameAndMail(@Param("username") String username, @Param("email") String email);
 }

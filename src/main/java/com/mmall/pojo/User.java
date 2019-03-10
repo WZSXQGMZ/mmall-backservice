@@ -19,11 +19,13 @@ public class User {
 
     private Integer role;
 
+    private Integer valid = 0;
+
     private Date createTime;
 
     private Date updateTime;
 
-    public User(Integer id, String username, String password, String email, String phone, String question, String answer, Integer role, Date createTime, Date updateTime) {
+    public User(Integer id, String username, String password, String email, String phone, String question, String answer, Integer role, Integer valid, Date createTime, Date updateTime) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -32,6 +34,7 @@ public class User {
         this.question = question;
         this.answer = answer;
         this.role = role;
+        this.valid = valid;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -118,5 +121,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getValid() {
+        return valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
     }
 }

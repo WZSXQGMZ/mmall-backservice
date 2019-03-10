@@ -75,6 +75,15 @@ public class UserController {
     }
 
     /**
+     *
+     * @param arg 验证参数（加密）
+     * @return
+     */
+    @RequestMapping(value = "/checkVerifyLink.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> checkVerifyLink(String arg){return  iUserService.checkVerifyLink(arg);}
+
+    /**
      * 用户校验
      *
      * @param str

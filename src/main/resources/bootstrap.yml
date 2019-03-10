@@ -1,8 +1,17 @@
 server:
   port: 8881
+
+
 spring:
   cloud:
     config:
       label: master
       profile: application
-      uri: http://localhost:8888/
+      #uri: http://localhost:8888/
+      discovery:
+        enabled: true
+        service-id: mmall-config-server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

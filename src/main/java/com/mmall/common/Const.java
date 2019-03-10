@@ -149,4 +149,20 @@ public class Const {
     public interface REDIS_LOCK {
         String CLOSE_ORDER_TASK_LOCK = "CLOSE_ORDER_TASK_LOCK"; // 关闭订单的分布式锁
     }
+
+    public enum UserAccountStatuEnum {
+        VERIFIED(1, "已验证"),
+        UNVERIFIED(0, "未验证");
+
+        private int code;
+        private String statu;
+
+        UserAccountStatuEnum(int code, String statu){
+            this.code = code;
+            this.statu = statu;
+        }
+
+        public int getCode(){return code;}
+        public String getStatu() {return statu;}
+    }
 }
