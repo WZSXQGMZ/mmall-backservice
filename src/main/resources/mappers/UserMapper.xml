@@ -80,11 +80,11 @@
     <insert id="insert" parameterType="com.mmall.pojo.User">
     insert into mmall_user (id, username, password, 
       email, phone, question, 
-      answer, role, create_time, 
+      answer, role, valid, create_time,
       update_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
-      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(), now())
+      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, now(), now())
   </insert>
     <insert id="insertSelective" parameterType="com.mmall.pojo.User">
         insert into mmall_user
@@ -205,9 +205,9 @@
         where username = #{username}
     </update>
 
-    <update id="updateValid" parameterType="java.util.Map">
+    <update id="updateValidByUserName" parameterType="java.util.Map">
         UPDATE mmall_user
-        SET valid = #{valid}
+        SET valid = #{valid}, update_time = now()
         WHERE username = #{username}
     </update>
 </mapper>

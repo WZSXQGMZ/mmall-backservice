@@ -75,7 +75,7 @@ public class UserController {
     }
 
     /**
-     *
+     * 验证注册邮箱
      * @param arg 验证参数（加密）
      * @return
      */

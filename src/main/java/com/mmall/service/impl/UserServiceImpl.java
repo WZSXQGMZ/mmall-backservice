@@ -82,7 +82,7 @@ public class UserServiceImpl implements IUserService {
             exception.printStackTrace();
             return false;
         }
-        String url = "http://localhost/user/checkMail?link=" + ciphertext;
+        String url = "http://localhost/user/checkVerifyLink.do?arg=" + ciphertext;
         //拼接内容
         String mailContent="<p><span>欢迎使用mmall，请在30分钟内访问下面的链接以完成邮箱验证</span></p>"
                 +"<p><a href=\"" + url + "\">" + url + "</a></p>";
@@ -134,7 +134,7 @@ public class UserServiceImpl implements IUserService {
                 return ServerResponse.createByErrorMessage("用户信息有误");
             }
             //更新用户权限，暂不判断
-            if(userMapper.updateValid(username, Const.UserAccountStatuEnum.VERIFIED.getCode()) == 0){
+            if(userMapper.updateValidByUserName(username, Const.UserAccountStatuEnum.VERIFIED.getCode()) == 0){
                 return ServerResponse.createByErrorMessage("验证错误");
             }
         }catch(Exception exception) {
