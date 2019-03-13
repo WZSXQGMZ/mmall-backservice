@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @EnableAutoConfiguration
 //开启热刷新配置
 @RefreshScope
+//作为eureka客户端
 @EnableEurekaClient
 @Controller
 public class MmallBackserviceApplication extends SpringBootServletInitializer {
