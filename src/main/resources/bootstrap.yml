@@ -11,6 +11,8 @@ spring:
       discovery:
         enabled: true
         service-id: mmall-config-server
+  application:
+    name: mmall-backservice
 eureka:
   client:
     service-url:
