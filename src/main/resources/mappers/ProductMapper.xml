@@ -217,4 +217,14 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <!--根据传入的id数组从数据库中-->
+    <select id="selectProductsByIdList" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM mmall_product
+        WHERE id IN
+          <foreach item="p_id" index="index" collection="idList" open="(" separator="," close=")">
+            #{p_id}
+          </foreach>
+    </select>
 </mapper>

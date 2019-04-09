@@ -4,6 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.Product;
 import com.mmall.vo.ProductDetailVo;
+import org.apache.solr.client.solrj.SolrServerException;
+
+import java.io.IOException;
 
 public interface IProductService {
 
@@ -20,4 +23,6 @@ public interface IProductService {
     ServerResponse<ProductDetailVo> getProductDetail(Integer productId);
 
     ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize, String orderBy);
+
+    ServerResponse<PageInfo> searchProduct(String keyword, int pageNum, int pageSize);
 }

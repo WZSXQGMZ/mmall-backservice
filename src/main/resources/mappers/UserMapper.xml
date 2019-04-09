@@ -17,7 +17,7 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    id, username, password, email, phone, question, answer, role, create_time, update_time
+    id, username, password, email, phone, question, answer, role, valid, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select

@@ -26,4 +26,8 @@ public interface ProductMapper {
     
     // 这里一定要用Integer，因为int无法为null，考虑到很多商品有已经删除的情况
     Integer selectStockByProductId(Integer id);
+
+    //根据传入的id数组获取数据库中的商品
+    List<Product> selectProductsByIdList(@Param("idList") List<String> idList);
+
 }

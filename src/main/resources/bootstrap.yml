@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 
 spring:
@@ -13,6 +13,11 @@ spring:
         service-id: mmall-config-server
   application:
     name: mmall-backservice
+  devtools:
+    restart:
+      enabled: true
+  session:
+    store-type: none
 eureka:
   client:
     service-url:

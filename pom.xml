@@ -295,11 +295,29 @@
 		</dependency>
 
 		<!-- spring session 单点登录 -->
-<!--		<dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
+		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-data-redis</artifactId>
-			<version>1.2.0.RELEASE</version>
-		</dependency>-->
+			<version>2.0.5.RELEASE</version>
+		</dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>2.1.1.RELEASE</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session</artifactId>
+			<version>1.2.2.RELEASE</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.redisson</groupId>
@@ -317,6 +335,25 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>7.1.0</version>
 		</dependency>
 
 	</dependencies>
@@ -339,6 +376,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
@@ -361,9 +401,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+                <version>3.3</version>
+                <configuration>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 					<compilerArguments>
 						<extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>

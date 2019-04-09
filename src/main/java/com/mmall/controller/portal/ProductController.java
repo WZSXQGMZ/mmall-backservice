@@ -61,4 +61,13 @@ public class ProductController {
         return iProductService.getProductByKeywordCategory(keyword, categoryId, pageNum, pageSize, orderBy);
     }
 
+    @PostMapping("/search.do")
+    @ResponseBody
+    public ServerResponse<PageInfo> search(@RequestParam(value = "keyword") String keyword,
+                                           @RequestParam(value = "pageNum", defaultValue = "0") int pageNum,
+                                           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
+        return iProductService.searchProduct(keyword, pageNum, pageSize);
+    }
+
+
 }

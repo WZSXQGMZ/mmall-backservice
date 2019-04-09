@@ -10,20 +10,29 @@ import com.mmall.dao.CategoryMapper;
 import com.mmall.dao.ProductMapper;
 import com.mmall.pojo.Category;
 import com.mmall.pojo.Product;
+import com.mmall.pojo.solr.ProductSO;
 import com.mmall.service.ICategoryService;
 import com.mmall.service.IProductService;
 import com.mmall.util.DateTimeUtil;
 import com.mmall.util.PropertiesUtil;
+import com.mmall.util.SolrUtil;
 import com.mmall.vo.ProductDetailVo;
 import com.mmall.vo.ProductListVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service("iProductService")
+@Slf4j
 public class  ProductServiceImpl implements IProductService {
 
     @Autowired
@@ -232,5 +241,61 @@ public class  ProductServiceImpl implements IProductService {
         pageInfo.setList(productListVoList);
 
         return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    public void moveProductInfoToSolr(){
+        try {
+            List<ProductSO> list = SolrUtil.query("三星").getBeans(ProductSO.class);
+            System.out.println(list.size());
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //根据关键字查询商品
+    @Override
+    public ServerResponse<PageInfo> searchProduct(String keyword, int pageNum, int pageSize) {
+
+        //如果关键字为空则查询所有商品
+        if(keyword == null || StringUtils.isBlank(keyword)){
+            keyword = "*";
+        }
+
+        //从solr获取查询商品的id
+        QueryResponse queryResponse = null;
+        //拼接查询语句，查询name和subtitle字段
+        String query = new StringBuilder().append("name:").append(keyword).append(" OR ").append("subtitle:").append(keyword).toString();
+        try {
+            queryResponse = SolrUtil.query(query, pageNum, pageSize);
+        } catch (SolrServerException e) {
+            log.error("solr search failed for SolrServerException");
+            log.error(e.getMessage());
+            return ServerResponse.createByErrorMessage("服务器异常，请稍后再试");
+        } catch (IOException e) {
+            log.error("solr search failed for IOException");
+            log.error(e.getMessage());
+            return ServerResponse.createByErrorMessage("服务器传输异常，请稍后再试");
+        }
+        List<String> idList = new LinkedList<>();
+        for(SolrDocument document : queryResponse.getResults()){
+            idList.add(String.valueOf(document.getFieldValue("id")));
+        }
+
+        //如果没有结果则返回不包含数据的ServerResponse<PageInfo>
+        if(idList == null || idList.size() == 0){
+            return ServerResponse.createBySuccess(new PageInfo<ProductListVo>());
+        }
+
+        //根据id列表从数据库获取商品信息
+        List<Product> productList = productMapper.selectProductsByIdList(idList);
+        //转为VO类
+        List<ProductListVo> productVoList = new LinkedList<>();
+        for(Product product : productList){
+            productVoList.add(assembleProductListVo(product));
+        }
+
+        return ServerResponse.createBySuccess(new PageInfo<ProductListVo>(productVoList));
     }
 }

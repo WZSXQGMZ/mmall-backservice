@@ -1,6 +1,9 @@
 package com.mmall.config;
 
 import com.mmall.controller.common.interceptor.AuthorityInterceptor;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -56,5 +59,12 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter{
         resolver.setDefaultEncoding("UTF-8");
 
         return resolver;
+    }
+
+
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
+        return (factory) -> factory.addContextCustomizers(
+                (context) -> context.setCookieProcessor(new LegacyCookieProcessor()));
     }
 }

@@ -11,6 +11,7 @@
 gitdownload/
 
 #maven ignore
+./mvn
 target/
 
 #eclipse ignore
